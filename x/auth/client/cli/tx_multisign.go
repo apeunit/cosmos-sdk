@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/psanford/wormhole-william/wormhole"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -23,7 +24,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
-// GetSignCommand returns the sign command
+// GetMultiSignCommand returns the sign command
 func GetMultiSignCommand(cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "multisign [file] [name] [[signature]...]",
@@ -93,6 +94,20 @@ func makeMultiSignCmd(cdc *codec.Codec) func(cmd *cobra.Command, args []string) 
 
 			txBldr = txBldr.WithAccountNumber(accnum).WithSequence(seq)
 		}
+		// TODO: #290
+		// open as many wormholes as required
+		// it probably requires an int with the number of signatures requested
+		// prints the multisig here
+
+		var w wormhole.Client
+		// encode the tx as json
+		tx, err := cdc.MarshalJSON(stdTx)
+		if err != nil {
+			return err
+		}
+		fmt.Println(tx) // TODO remove
+		// TODO: https://github.com/psanford/wormhole-william#api-usage
+		// better would be to use the same code for all the clients
 
 		// read each signature and add it to the multisig if valid
 		for i := 2; i < len(args); i++ {

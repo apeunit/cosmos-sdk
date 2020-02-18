@@ -14,6 +14,7 @@ require (
 	github.com/mattn/go-isatty v0.0.10
 	github.com/pelletier/go-toml v1.6.0
 	github.com/pkg/errors v0.8.1
+	github.com/psanford/wormhole-william v1.0.1
 	github.com/rakyll/statik v0.1.6
 	github.com/spf13/afero v1.2.1 // indirect
 	github.com/spf13/cobra v0.0.5
